@@ -1,0 +1,161 @@
+﻿@model ML.Usuario
+@{
+    Layout = null;
+}
+<!doctype html>
+
+<html lang="es">
+    
+    <head>
+        
+        <meta charset="utf-8">
+        
+        <title> Login </title>    
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css?family=Overpass&display=swap" rel="stylesheet">
+        
+        <link rel="stylesheet" href="csss/login.css">
+        
+        <style type="text/css">
+            
+        </style>
+        
+        <script type="text/javascript">
+        
+        </script>
+        
+    </head>
+    
+    <body>
+        
+        <div id="contenedor">
+            <div id="central">
+                <div id="login">
+                    <div class="titulo">
+                        Bienvenido
+                    </div>
+                    
+                        @using (Html.BeginForm("Form", "Usuario1", FormMethod.Post, new { enctype = "multipart/form-data", @id="loginform" }))
+            {
+                    
+                            @Html.LabelFor(model => model.Nombre)
+                            
+                                <span class="input-group-text"><i class="bi bi-controller"></i></span>
+                                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre", @onkeypress = "return SoloLetras(event,'error')", @name="usuario" })
+                                
+
+                                @Html.ValidationMessageFor(model => model.Nombre)
+                           
+                                              
+
+                    
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.ApellidoPaterno)
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="bi bi-controller"></i></span>
+
+                                @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno", @onkeypress = "return SoloLetras(event,'error2')" })
+                                @Html.ValidationMessageFor(model => model.ApellidoPaterno)
+                            </div>
+                            <label class="form-check-label" id="error2"></label>
+
+                        </div>
+                    
+
+                    
+                       
+
+                    
+
+                                <span class="input-group-text"><i class="bi bi-controller"></i></span>
+                                @if (Model.Genero == "H ")
+                                {
+                                    Model.Genero = "H";
+                                }
+                                @if (Model.Genero == "M ")
+                                {
+                                    Model.Genero = "M";
+                                }
+                                @if (Model.Genero == null)
+                                {
+
+                                    @Html.RadioButtonFor(model => model.Genero, "H", new { @class = "form-check-input", @id = "rbSexoH", @value="H", @type="radio"})
+                                    <label class="form-check-label" for="option1">Hombre &nbsp</label>
+                                    @Html.RadioButtonFor(model => model.Genero, "M", new { @class = "form-check-input", @id = "rbSexoM", @value="M", @type="radio" })
+                                    <label class="form-check-label" for="option2">Mujer</label>
+
+                                }
+                                else
+                                {
+                                    if (Model.Genero == "H")
+                                    {
+                                        
+                                        @Html.RadioButtonFor(model => model.Genero, "H", new { @class = "form-check-input", @id = "rbSexoH", @value="H", @type="radio", @checked = "true"})
+                                        <label class="form-check-label" for="option1">Hombre &nbsp</label>
+                                        @Html.RadioButtonFor(model => model.Genero, "M", new { @class = "form-check-input", @id = "rbSexoM", @value="M", @type="radio" })
+                                        <label class="form-check-label" for="option2">Mujer</label>
+                                    }
+                                    if (Model.Genero == "M")
+                                    {
+                                        @Html.RadioButtonFor(model => model.Genero, "H", new { @class = "form-check-input", @id = "rbSexoH", @value="H", @type="radio"})
+                                        <label class="form-check-label" for="option1">Hombre &nbsp</label>
+                                        @Html.RadioButtonFor(model => model.Genero, "M", new { @class = "form-check-input", @id = "rbSexoM", @value="M", @type="radio", @checked = "true" })
+                                        <label class="form-check-label" for="option2">Mujer</label>
+                                    }
+                                }
+                              
+
+                                <span class="input-group-text"><i class="bi bi-controller"></i></span>
+
+                                @Html.TextBoxFor(model => model.NumeroDeTelefono, new { @class = "form-control", @id = "txtNumeroDeTelefono" })
+                                @Html.ValidationMessageFor(model => model.NumeroDeTelefono)
+                        
+                   
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="bi bi-controller"></i></span>
+
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @id = "txtEmail1", @oninput = "ValidarCorreo(this, 'error7')" })
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </div>
+                            
+                            
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="bi bi-controller"></i></span>
+
+
+                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @id = "txtUserName" })
+                                @Html.ValidationMessageFor(model => model.UserName)
+                            </div>
+                            
+                    
+                        
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="bi bi-controller"></i></span>
+
+                                @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @id = "txtPassword1", @oninput ="ValidarContra(event, 'error10')" })
+                                @Html.ValidationMessageFor(model => model.Password)
+                            </div>
+                            
+                        
+                    
+                       
+                    
+                        <button type="submit" title="Ingresar" name="Ingresar">Registrar</button>
+                        }
+                    
+                    <div class="pie-form">
+                      
+                        @Html.ActionLink("INICIAR SESION", "Login", "Usuario1", htmlAttributes: new { @class = "btn btn-danger" })
+                            
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+            
+    </body>
+</html>

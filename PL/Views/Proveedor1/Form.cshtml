@@ -1,0 +1,167 @@
+﻿@model ML.Proveedor
+@{
+    ViewBag.Title = "Form";
+    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Form</h2>
+    <div class="row gx-5 justify-content-center">
+
+        <div class="col-md-12">
+
+            @using (Html.BeginForm("Form", "Proveedor1", FormMethod.Post, new { enctype = "multipart/form-data", @id="Hola" }))
+            {
+                <div class="form-horizontal container">
+
+                    <div class="form-group row ">
+                        <div class="col-md-3 visually-hidden">
+                            @Html.LabelFor(model => model.IdProveedor, new { @class = "hidden" })
+                            @Html.TextBoxFor(model => model.IdProveedor, new { @class = "hidden form-control" })
+                            @Html.ValidationMessageFor(model => model.IdProveedor)
+
+                        </div>
+                    
+
+                    
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.NombreProveedor)
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="bi bi-controller"></i></span>
+                                @Html.TextBoxFor(model => model.NombreProveedor, new { @class = "form-control", @id = "txtNombre", @onkeypress = "return SoloLetras(event,'error')" })
+                                
+
+                                @Html.ValidationMessageFor(model => model.IdProveedor)
+                            </div>
+                            <label class="form-check-label" id="error"></label>
+                        </div>
+                                              
+
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.Telefono)
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="bi bi-controller"></i></span>
+
+                                @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", @id = "txtNumeroDeTelefono", @onkeypress = "return SoloNumeros(event,'error5')" })
+                                @Html.ValidationMessageFor(model => model.Telefono)
+                            </div>
+                            <label class="form-check-label" id="error5"></label>
+
+                        </div>
+                    
+
+
+
+
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.Imagen)
+                             <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i class="bi bi-card-image"></i></span>
+                                <input accept="image/jpeg" type="file" name="ImagenData" class="form-control" onchange="readURL(this);" />
+                            </div>
+                            @if (Model.Imagen != null)
+                            {
+                                <img id="ImagenPreview" src="data:image/jpeg;base64,@Model.Imagen" style="height: 150px; width: 150px;" />
+                            }
+                            else
+                            {
+                                <img id="ImagenPreview" src="~/UsuarioSinFoto.png" style="height: 150px; width: 150px;"/>
+                            }
+                            @Html.ValidationMessageFor(model => model.Imagen)
+                        </div>
+                        @Html.HiddenFor(model => model.Imagen)
+
+                    </div>
+
+                    <hr />
+                    <hr />
+                    
+
+
+                    <div class="form-group container row">
+                        <div class="row">
+                    
+                            <div class="col-sm-4">
+                            <input type="submit" value="Guardar" class="btn btn-success" />
+                            @Html.ActionLink("Regresar", "GetAll", "Proveedor1", htmlAttributes: new { @class = "btn btn-danger" })
+                            </div>
+                        </div>
+                    </div>
+                   
+
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
+<script type="text/javascript">
+
+    function readURL(input)
+    {
+        if (input.files && input.files[0])
+        {
+            var reader = new FileReader();
+            reader.onload = function (e)
+            {
+                $('#ImagenPreview').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+        $(function () 
+        {
+            $("#txtFechaDeNacimiento").datepicker
+            ({
+                dateFormat: 'dd-mm-yy',
+                changeMonth: true,
+                yearRange: '1940:2004',
+                changeYear: true
+            });
+        });
+
+        function SoloNumeros(e, controlId) 
+        {
+            var caracter = e.key;
+            if (!/^[0-9]/g.test(caracter)) 
+            {
+                $('#' + controlId).html("Solo se aceptan numeros");
+                $('#' + controlId).css({ "color": "red" });
+                return false;
+            }
+            else 
+            {
+                $('#' + controlId).text("");
+                return true;
+            }
+        }
+
+        function SoloLetras(e, controlId) 
+        {
+            var caracter = e.key;
+            if (!/^[a-zA-Z ]/g.test(caracter)) {
+                $('#' + controlId).html("Solo se aceptan letras");
+                $('#' + controlId).css({ "color": "red" });
+                return false;
+            }
+            else {
+                $('#' + controlId).text("");
+                return true;
+            }
+        }
+
+        
+
+</script>
+}
